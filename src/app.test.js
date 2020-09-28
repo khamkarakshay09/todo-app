@@ -1,9 +1,23 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { mount } from "enzyme";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import App from "./app";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("App component", () => {
+  const wrapper = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  const inputElement = wrapper.find("input#qa-todo-input");
+  const submitBtn = wrapper.find("button#qa-submit-btn");
+  it("Snapshot Test for App component", () => {
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it("Todo Form", () => {
+    expect(inputElement).toHaveLength(1);
+    expect(submitBtn).toHaveLength(1);
+  });
 });

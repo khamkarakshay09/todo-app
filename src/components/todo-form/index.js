@@ -31,7 +31,21 @@ function TodoFrom() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatcher(addTodo([...todos, todo]));
+    const isPresent =
+      todos.length > 0
+        ? todos.findIndex((td) => !td.isDone && td.title === todo.title)
+        : -1;
+
+    if (isPresent <= -1) {
+      dispatcher(
+        addTodo([
+          ...todos,
+          { ...todo, _id: Math.floor(Date.now() + Math.random()) },
+        ])
+      );
+    } else {
+      alert("Task Already Exist!!");
+    }
     setTodo({
       title: "",
       isDone: false,
@@ -39,18 +53,21 @@ function TodoFrom() {
   };
 
   const classes = useStyles();
-  console.log(todos);
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit}>
+    <form
+      className={classes.root}
+      onSubmit={handleSubmit}
+    >
       <TextField
+        id="qa-todo-input"
         className={classes.todoInput}
         value={todo.title}
         onChange={handleChange}
         variant="outlined"
         label="Add New Task"
       />
-      <IconButton type="submit" color="primary">
+      <IconButton id="qa-submit-btn" type="submit" color="primary">
         <SendIcon />
       </IconButton>
     </form>
