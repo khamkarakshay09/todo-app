@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { IconButton, TextField, makeStyles } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import { addTodo } from "../../redux/todo/actions";
@@ -40,7 +41,7 @@ function TodoFrom() {
       dispatcher(
         addTodo([
           ...todos,
-          { ...todo, _id: Math.floor(Date.now() + Math.random()) },
+          { ...todo, _id: uuidv4() },
         ])
       );
     } else {

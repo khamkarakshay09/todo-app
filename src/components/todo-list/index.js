@@ -107,7 +107,7 @@ function TodoList() {
   const handleDoneClick = ({ currentTarget: { id } }) => {
     const updateTodos = [...todos];
     const updateIndex = updateTodos.findIndex(
-      (todo) => todo._id === parseInt(id)
+      (todo) => todo._id === id
     );
 
     if (updateIndex > -1) {
@@ -119,12 +119,12 @@ function TodoList() {
   const handleRemoveClick = ({ currentTarget: { id } }) => {
     const updateTodos = [...todos];
     const updateIndex = updateTodos.findIndex(
-      (todo) => todo._id === parseInt(id)
+      (todo) => todo._id === id
     );
 
     if (updateIndex > -1) {
-      const todosAfterRemove = updateTodos.splice(updateIndex + 1, 1);
-      dispatcher(removeTodo([...todosAfterRemove]));
+      updateTodos.splice(updateIndex, 1);
+      dispatcher(removeTodo([...updateTodos]));
     }
   };
 
