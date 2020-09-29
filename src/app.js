@@ -11,7 +11,7 @@ const userStyles = makeStyles(() => ({
 function App() {
   const classes = userStyles();
   return (
-    <Container className={classes.root}>
+    <Container id="qa-app" className={classes.root}>
       <Todo />
     </Container>
   );

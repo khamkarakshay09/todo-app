@@ -55,15 +55,25 @@ const useStyles = makeStyles(() => ({
 function ListItem({ todo, onDoneClick, onRemoveClick }) {
   const classes = useStyles();
   return (
-    <Card id="qa-listItem" className={classes.cardRoot}>
+    <Card className={`${classes.cardRoot} qa-listItem`}>
       <CardContent>{todo.title}</CardContent>
       <CardActions>
         {!todo.isDone && (
-          <IconButton id={todo._id} onClick={onDoneClick} color="primary">
+          <IconButton
+            className="qa-done-btn"
+            id={todo._id}
+            onClick={onDoneClick}
+            color="primary"
+          >
             <DoneIcon />
           </IconButton>
         )}
-        <IconButton id={todo._id} onClick={onRemoveClick} color="secondary">
+        <IconButton
+          className="qa-delete-btn"
+          id={todo._id}
+          onClick={onRemoveClick}
+          color="secondary"
+        >
           <DeleteIcon />
         </IconButton>
       </CardActions>
@@ -83,7 +93,7 @@ function List({ todos, onDoneClickHandler, onRemoveClickHandler }) {
       />
     ))
   ) : (
-    <Card className={classes.noTaskCard}>
+    <Card id="qa-no-data" className={classes.noTaskCard}>
       <CardContent>No tasks found!</CardContent>
     </Card>
   );
@@ -102,6 +112,23 @@ function TodoList() {
 
   useEffect(() => {
     setTodos(todosProps);
+    if (activeFilter === "Active") {
+      setTodos(
+        todosProps.length > 0
+          ? todosProps.filter((todo) => !todo.isDone)
+          : [...todos]
+      );
+    }
+    if (activeFilter === "Completed") {
+      setTodos(
+        todosProps.length > 0
+          ? todosProps.filter((todo) => todo.isDone)
+          : [...todos]
+      );
+    }
+    if (activeFilter === "All") {
+      setTodos([...todosProps]);
+    }
   }, [todosProps]);
 
   const handleDoneClick = ({ currentTarget: { id } }) => {
@@ -159,7 +186,7 @@ function TodoList() {
         onRemoveClickHandler={handleRemoveClick}
       />
       <Card className={classes.filters}>
-        <p className={classes.count}>All({todos.length})</p>
+        <p id="qa-count" className={classes.count}>All({todos.length})</p>
         <div className={classes.btnGrp}>
           <Button
             id="All"

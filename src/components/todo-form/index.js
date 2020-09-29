@@ -56,10 +56,7 @@ function TodoFrom() {
   const classes = useStyles();
 
   return (
-    <form
-      className={classes.root}
-      onSubmit={handleSubmit}
-    >
+    <form id="qa-todo-form" className={classes.root} onSubmit={handleSubmit}>
       <TextField
         id="qa-todo-input"
         className={classes.todoInput}
